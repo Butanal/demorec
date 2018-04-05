@@ -53,12 +53,3 @@ function DemoRec:RequestDemo(ply, length)
   net.WriteString(DemoRec.settings.website)
   net.Send(ply)
 end
-
-
-function DemoRec.PlayerInitialSpawn(ply)
-  net.Start("DemoRec.SendSettings")
-  net.WriteTable(DemoRec.settings)
-  net.Send(ply)
-end
-
-hook.Add("PlayerInitialSpawn", "DemoRec.PlayerInitialSpawn", DemoRec.PlayerInitialSpawn)
