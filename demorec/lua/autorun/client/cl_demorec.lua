@@ -68,10 +68,3 @@ net.Receive("DemoRec.StartRecord", DemoRec.StartRecord)
 hook.Add("Initialize", "RemoRec.Initialize", function()
 	hook.Remove("HUDPaint", "DrawRecordingIcon")
 end )
-
-
-function DemoRec.ReceiveSettings()
-	DemoRec.settings = net.ReadTable()
-end
-
-net.Receive("DemoRec.SendSettings", DemoRec.ReceiveSettings)
