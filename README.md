@@ -2,7 +2,7 @@
 Garry's Mod addon that allows to request clientside demos, which are sent by the client to a web Flask server.
 
 ## Purpose
-This addon was created for use on my server, to compensate for the broken serverside demos in the game. It allows a serveradmin / admin to request a clientside demo of a certain length from a specific player, which is recorded without him being aware and then sent to a web server where it is stored. Due to the demo being send using HTTP, the upload is quite fast and no lag is noticed by the client.
+This addon was created for use on my server, to compensate for the broken serverside demos in the game. It allows a serveradmin / admin to request a clientside demo of a certain length from a specific player, which is recorded without him being aware and then sent to a web server where it is stored. Due to the demo being sent using HTTP, the upload is quite fast and no lag is noticed by the client.
 
 ## Current State
 This addon is fully functional, but perfect behavior is not guaranteed, nor is support for this addon.
