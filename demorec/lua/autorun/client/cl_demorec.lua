@@ -30,9 +30,9 @@ function DemoRec.EndRecord()
 	timer.Simple(10, function()
 
 		if file.Exists(CurrentRecord.filename, "DATA") then
-		local data = file.Read(CurrentRecord.filename, "DATA")
-		file.Delete(CurrentRecord.filename)
-		DemoRec.PostDemo(data, CurrentRecord)
+			local data = file.Read(CurrentRecord.filename, "DATA")
+			file.Delete(CurrentRecord.filename)
+			DemoRec.PostDemo(data, CurrentRecord)
 		end
 
 	end )
