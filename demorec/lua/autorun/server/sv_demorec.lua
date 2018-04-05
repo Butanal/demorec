@@ -1,0 +1,64 @@
+util.AddNetworkString("DemoRec.StartRecord")
+util.AddNetworkString("DemoRec.SendSettings")
+
+DemoRec = DemoRec or {}
+DemoRec.settings = DemoRec.settings or {}
+
+include("../../demorec_settings.lua")
+
+
+function DemoRec:HasPermission(ply)
+  return ply:IsSuperAdmin() or (DemoRec.settings.admin_allowed and ply:IsAdmin())
+end
+
+
+function DemoRec.ConCommand(ply, cmd, args)
+  if IsValid(ply) and not DemoRec:HasPermission(ply) then return end
+
+  local ident = args[1]
+  local target = player.GetBySteamID64(ident)
+  if not IsValid(target) then return end
+
+  local length = tonumber(args[2])
+  if length <= 0 or length > DemoRec.settings.MaxLength then return end
+
+  DemoRec:RequestDemo(target, length)
+end
+
+concommand.Add("demorec", DemoRec.ConCommand)
+
+
+function DemoRec:AddWebClient(sid64, cl_key, file_prefix)
+  local post_table = {}
+  post_table["sid64"] = sid64
+  post_table["filename"] = file_prefix .. ".dem"
+  post_table["cl_key"] = tostring(cl_key)
+  post_table["sv_key"] = DemoRec.settings.sv_key
+
+  http.Post(DemoRec.settings.website .. "addclient", post_table)
+
+end
+
+
+function DemoRec:RequestDemo(ply, length)
+  local key = math.random(100000)
+  local file_prefix = os.date("%H_%M_%S__%d_%m_%Y", os.time())
+
+  DemoRec:AddWebClient(ply:SteamID64(), key, file_prefix)
+
+  net.Start("DemoRec.StartRecord")
+  net.WriteUInt(key, 18)
+  net.WriteUInt(length, 12)
+  net.WriteString(file_prefix)
+  net.WriteString(DemoRec.settings.website)
+  net.Send(ply)
+end
+
+
+function DemoRec.PlayerInitialSpawn(ply)
+  net.Start("DemoRec.SendSettings")
+  net.WriteTable(DemoRec.settings)
+  net.Send(ply)
+end
+
+hook.Add("PlayerInitialSpawn", "DemoRec.PlayerInitialSpawn", DemoRec.PlayerInitialSpawn)
