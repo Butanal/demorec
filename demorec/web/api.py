@@ -123,9 +123,6 @@ class ClientAdd(Resource):
 
         return {"message": "Success."}
 
-    def get(self):
-        return pending_posts
-
 
 api.add_resource(DemoWrite, "/postdemo")
 api.add_resource(ClientAdd, "/addclient")
