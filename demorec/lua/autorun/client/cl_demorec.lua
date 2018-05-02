@@ -65,6 +65,6 @@ end
 net.Receive("DemoRec.StartRecord", DemoRec.StartRecord)
 
 
-hook.Add("Initialize", "RemoRec.Initialize", function()
+hook.Add("Initialize", "DemoRec.Initialize", function()
 	hook.Remove("HUDPaint", "DrawRecordingIcon")
 end )
