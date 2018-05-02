@@ -20,7 +20,7 @@ function DemoRec.EndRecord()
 	RunConsoleCommand("stop")
 	DemoRec.recording = false
 
-	local CurrentRecord = DemoRec.Queue[1] and DemoRec.Queue[1] or DemoRec.CurrentRecord
+	local CurrentRecord = DemoRec.Queue[1] or DemoRec.CurrentRecord
 	table.remove(DemoRec.Queue, 1)
 
 	CurrentRecord.filename = CurrentRecord.file_prefix .. ".dem"
