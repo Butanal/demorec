@@ -40,7 +40,7 @@ function DemoRec.ConCommand(ply, cmd, args)
 
   DemoRec:RequestDemo(target, length)
   table.insert(DemoRec.requests[target:SteamID64()], ply)
-  DemoRec:ChatNotify(ply, "Requested demo from " .. target:Name() .. "."
+  DemoRec:ChatNotify(ply, "Requested demo from " .. target:Name() .. ".")
 end
 
 concommand.Add("demorec", DemoRec.ConCommand)
