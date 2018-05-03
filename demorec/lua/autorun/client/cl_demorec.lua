@@ -11,8 +11,17 @@ function DemoRec.PostDemo(data, CurrentRecord)
 	post_table["filename"] = CurrentRecord.filename
 	post_table["cl_key"] = tostring(CurrentRecord.key)
 	post_table["data_b64"] = util.Base64Encode(data)
-
-	http.Post(DemoRec.settings.website, post_table)
+	http.Post(DemoRec.settings.website, post_table, function(r, l, h, code)
+		if code == 200 then
+			net.Start("DemoRec.EndRequest")
+      net.WriteBool(true)
+			net.SendToServer()
+		end
+	end, function(err) 
+      net.Start("DemoRec.EndRequest")
+      net.WriteBool(false)
+      net.SendToServer()
+  end )
 end
 
 
