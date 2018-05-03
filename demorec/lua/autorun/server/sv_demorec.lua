@@ -4,7 +4,7 @@ util.AddNetworkString("DemoRec.EndRequest")
 
 DemoRec = DemoRec or {}
 DemoRec.settings = DemoRec.settings or {}
-DemoRec.players = DemoRec.players or {}
+DemoRec.requests = DemoRec.requests or {}
 
 include("../../demorec_settings.lua")
 
