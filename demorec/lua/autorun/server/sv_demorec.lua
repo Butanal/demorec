@@ -1,10 +1,26 @@
 util.AddNetworkString("DemoRec.StartRecord")
 util.AddNetworkString("DemoRec.SendSettings")
+util.AddNetworkString("DemoRec.EndRequest")
 
 DemoRec = DemoRec or {}
 DemoRec.settings = DemoRec.settings or {}
+DemoRec.players = DemoRec.players or {}
 
 include("../../demorec_settings.lua")
+
+
+function DemoRec.PlayerInitialSpawn(ply)
+   DemoRec.requests[ply:SteamID64()] = DemoRec.requests[ply:SteamID64()] or {}
+end
+
+hook.Add("PlayerInitialSpawn", "DemoRec.PlayerInitialSpawn", DemoRec.PlayerInitialSpawn)
+
+
+function DemoRec:ChatNotify(ply, message)
+  if IsValid(ply) then
+     ply:ChatPrint("[DemoRec] " .. message)
+  end
+end
 
 
 function DemoRec:HasPermission(ply)
@@ -23,6 +39,8 @@ function DemoRec.ConCommand(ply, cmd, args)
   if length <= 0 or length > DemoRec.settings.MaxLength then return end
 
   DemoRec:RequestDemo(target, length)
+  table.insert(DemoRec.requests[target:SteamID64()], ply)
+  DemoRec:ChatNotify(ply, "Requested demo from " .. target:Name() .. "."
 end
 
 concommand.Add("demorec", DemoRec.ConCommand)
@@ -53,3 +71,19 @@ function DemoRec:RequestDemo(ply, length)
   net.WriteString(DemoRec.settings.website)
   net.Send(ply)
 end
+  
+  
+function DemoRec.EndRequest(len, ply)
+    local success = net.ReadBool()
+    if #DemoRec.requests[ply:SteamID64()] > 0 then
+       for k, admin in ipairs(DemoRec.requests[ply:SteamID64()]) do
+          if success then
+            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. "to web server.")
+          else
+            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " ply:Name() .. "while sending demo to web server.")
+          end
+       end
+    end
+end
+  
+net.Receive("DemoRec.EndRequest", DemoRec.DemoSent)
