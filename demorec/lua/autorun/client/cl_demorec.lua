@@ -14,7 +14,7 @@ function DemoRec.PostDemo(data, CurrentRecord)
 	http.Post(DemoRec.settings.website, post_table, function(r, l, h, code)
 		if code == 200 then
 			net.Start("DemoRec.EndRequest")
-      net.WriteBool(true)
+      			net.WriteBool(true)
 			net.SendToServer()
 		end
 	end, function(err) 
