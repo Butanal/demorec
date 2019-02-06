@@ -14,7 +14,7 @@ Feel free to edit this addon, and re-distribute it under the same license.
 
 - Copy the *demorec* folder into your server's *addons* folder.
 - Copy *demorec/web* to your desired location for the web server.
-- Install dependencies using `pip3 -r requirements.txt` from the *web* folder (or whatever your Python3 pip executable is).
+- Install dependencies using `pip3 install -r requirements.txt` from the *web* folder (or whatever your Python3 pip executable is).
 - **Important** : change the server key to a custom one in *lua/demorec_settings.lua* and *web/key.txt*.
 - Done, now just start the web server using `python3 api.py`, or for a long-term solution find how to use Flask in your preferred web server (apache2 / nginx).
 
