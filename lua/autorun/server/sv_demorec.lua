@@ -86,4 +86,4 @@ function DemoRec.EndRequest(len, ply)
     end
 end
   
-net.Receive("DemoRec.EndRequest", DemoRec.DemoSent)
+net.Receive("DemoRec.EndRequest", DemoRec.EndRequest)
