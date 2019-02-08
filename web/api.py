@@ -11,7 +11,7 @@ app = Flask(__name__)
 api = Api(app)
 
 try:
-    sv_key = open("key.txt", "r").read()
+    sv_key = open("key.txt", "r").read().rstrip()
 except FileNotFoundError:
     print("Error : no server key found in key.txt.")
     sys.exit()
