@@ -78,9 +78,9 @@ function DemoRec.EndRequest(len, ply)
     if #DemoRec.requests[ply:SteamID64()] > 0 then
        for k, admin in ipairs(DemoRec.requests[ply:SteamID64()]) do
           if success then
-            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. "to web server.")
+            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. " to web server.")
           else
-            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. "while sending demo to web server.")
+            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. " while sending demo to web server.")
           end
        end
     end
