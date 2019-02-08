@@ -80,7 +80,8 @@ function DemoRec.EndRequest(len, ply)
           if success then
             DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. " to web server.")
           else
-            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. " while sending demo to web server.")
+            local err = net.ReadString()
+            DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. " while sending demo to web server :\n" .. err)
           end
        end
     end

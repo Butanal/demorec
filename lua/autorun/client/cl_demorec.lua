@@ -16,10 +16,17 @@ function DemoRec.PostDemo(data, CurrentRecord)
 			net.Start("DemoRec.EndRequest")
       			net.WriteBool(true)
 			net.SendToServer()
+		else
+			local err = util.JSONToTable(r)["message"]
+			net.Start("DemoRec.EndRequest")
+			net.WriteBool(false)
+			net.WriteString(err)
+			net.SendToServer()
 		end
 	end, function(err) 
       net.Start("DemoRec.EndRequest")
       net.WriteBool(false)
+	  net.WriteString(err)
       net.SendToServer()
   end )
 end
