@@ -41,7 +41,7 @@ function DemoRec.ConCommand(ply, cmd, args)
     end
 
     DemoRec:RequestDemo(target, length)
-    table.insert(DemoRec.requests[target:SteamID64()], ply)
+    table.insert(DemoRec.requests[target:SteamID64()], ply:SteamID64())
     DemoRec:ChatNotify(ply, "Requested demo from " .. target:Name() .. ".")
 end
 
@@ -72,7 +72,9 @@ function DemoRec.EndRequest(len, ply)
     local success = net.ReadBool()
 
     if #DemoRec.requests[ply:SteamID64()] > 0 then
-        for k, admin in ipairs(DemoRec.requests[ply:SteamID64()]) do
+        for k, admin_sid64 in ipairs(DemoRec.requests[ply:SteamID64()]) do
+            local admin = player.GetBySteamID64(admin_sid64)
+            if not IsValid(admin) then continue end
             if success then
                 DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. " to web server.")
             else
