@@ -82,6 +82,7 @@ function DemoRec.EndRequest(len, ply)
                 DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. " while sending demo to web server :\n" .. err)
             end
         end
+        DemoRec.requests[ply:SteamID64()] = {}
     end
 end
 
