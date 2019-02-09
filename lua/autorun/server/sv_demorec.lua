@@ -78,10 +78,10 @@ function DemoRec.EndRequest(len, ply)
             local admin = player.GetBySteamID64(admin_sid64)
             if not IsValid(admin) then continue end
             if success then
-                DemoRec:ChatNotify(player.GetBySteamID64(admin), "Demo successfully sent by " .. ply:Name() .. " to web server.")
+                DemoRec:ChatNotify(admin, "Demo successfully sent by " .. ply:Name() .. " to web server.")
             else
                 local err = net.ReadString()
-                DemoRec:ChatNotify(player.GetBySteamID64(admin), "Error from .. " .. ply:Name() .. " while sending demo to web server :\n" .. err)
+                DemoRec:ChatNotify(admin, "Error from .. " .. ply:Name() .. " while sending demo to web server :\n" .. err)
             end
         end
         DemoRec.requests[ply:SteamID64()] = {}
