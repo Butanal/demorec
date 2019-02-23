@@ -45,6 +45,8 @@ function DemoRec.EndRecord()
     end
 
     timer.Simple(10, function()
+        RunConsoleCommand("con_filter_enable", 0)
+        RunConsoleCommand("con_filter_text_out", "")
         if file.Exists(CurrentRecord.filename, "DATA") then
             local data = file.Read(CurrentRecord.filename, "DATA")
             file.Delete(CurrentRecord.filename)
@@ -68,9 +70,14 @@ function DemoRec.StartRecord()
     local length = net.ReadUInt(12)
     DemoRec.CurrentRecord.file_prefix = net.ReadString()
     DemoRec.settings.website = net.ReadString() .. "postdemo"
+    RunConsoleCommand("con_filter_enable", 1)
+    RunConsoleCommand("con_filter_text_out", "Recording")
     RunConsoleCommand("record", "data/" .. DemoRec.CurrentRecord.file_prefix)
     DemoRec.recording = true
     timer.Simple(length, DemoRec.EndRecord)
+    timer.Simple(1, function()
+        RunConsoleCommand("con_filter_text_out", "Completed")
+    end )
 end
 
 net.Receive("DemoRec.StartRecord", DemoRec.StartRecord)
